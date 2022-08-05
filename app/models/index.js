@@ -1,24 +1,24 @@
-const config = require("../config/db.config.js");
+const dbConfig = require("../config/db.config.js");
 
 const Sequelize = require("sequelize");
 const sequelize = new Sequelize(
-  config.DB,
-  config.USER,
-  config.PASSWORD,
+  dbConfig.DB,
+  dbConfig.USER,
+  dbConfig.PASSWORD,
   {
-    host: config.HOST,
-    dialect: config.dialect,
-    operatorsAliases: false,
-    timezone: config.timezone, // DB에 저장할 때 시간 설정
+    host: dbConfig.HOST,
+    dialect: dbConfig.dialect,
+    operatorsAliases: 0,
+    timezone: dbConfig.timezone, // DB에 저장할 때 시간 설정
     dialectOptions: {
-      timezone: config.timezone, // DB에서 가져올 때 시간 설정
+      timezone: dbConfig.timezone, // DB에서 가져올 때 시간 설정
     },
 
     pool: {
-      max: config.pool.max,
-      min: config.pool.min,
-      acquire: config.pool.acquire,
-      idle: config.pool.idle
+      max: dbConfig.pool.max,
+      min: dbConfig.pool.min,
+      acquire: dbConfig.pool.acquire,
+      idle: dbConfig.pool.idle
     }
   }
 );
@@ -28,5 +28,7 @@ const db = {};
 db.Sequelize = Sequelize;
 db.sequelize = sequelize;
 
+// 모델 정의
+db.account = require("../models/account.model")(sequelize, Sequelize);
 
 module.exports = db;

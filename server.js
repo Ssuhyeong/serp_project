@@ -22,9 +22,8 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 // database
-// const db = require("./app/models");
-
-// db.sequelize.sync();
+const db = require("./app/models");
+db.sequelize.sync();
 
 
 // simple route
@@ -33,7 +32,8 @@ app.get("/", (req, res) => {
 });
 
 
-// require('./app/routes/test.routes')(app)
+// 미들웨어
+ require('./app/routes/account.route')(app)
 
 // set port, listen for requests
 const PORT = process.env.PORT || 3001;
